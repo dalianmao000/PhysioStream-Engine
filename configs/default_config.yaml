@@ -1,0 +1,17 @@
+# configs/default_config.yaml
+physio:
+  eeg_channels: 8
+  imu_channels: 6
+  sample_rate: 250.0
+
+adaptive_filter:
+  filter_length: 64
+  mu: 0.01
+
+sqa:
+  quality_threshold: 0.6
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  enable_cors: true
