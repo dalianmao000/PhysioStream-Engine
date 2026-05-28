@@ -1,0 +1,36 @@
+PhysioStream-Engine C++ Build Requirements
+==========================================
+
+Dependencies
+------------
+- CMake >= 3.15
+- Eigen3 (linear algebra library)
+- FFTW (Fast Fourier Transform library)
+- pybind11 (Python C++ bindings)
+- Python 3.x development headers
+
+Installation (Ubuntu/Debian)
+---------------------------
+sudo apt-get install libeigen3-dev libfftw3-dev pybind11-dev cmake python3-dev
+
+Installation (macOS)
+--------------------
+brew install eigen fftw pybind11 cmake python
+
+Installation (Fedora/RHEL)
+-------------------------
+sudo dnf install eigen3-devel fftw-devel pybind11-devel cmake python3-devel
+
+Build Instructions
+------------------
+./scripts/build_cpp.sh
+
+Or manually:
+mkdir -p build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make -j$(nproc)
+
+The compiled module will be placed at build/physio_cpp.so
+
+Note: The placeholder physio_cpp.so in build/ is a stub. Run the build
+script after installing dependencies to generate the actual module.
