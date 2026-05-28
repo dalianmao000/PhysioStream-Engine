@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  physio-stream-engine:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./configs:/app/configs
+
+  # Optional: Redis for high-throughput scenarios
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
