@@ -141,20 +141,49 @@ filtered_eeg = adaptive_filter.filter(eeg_signal, imu_magnitude)
 
 ```
 physio-stream-engine/
+├── .gitignore                 # Git 忽略规则
+├── LICENSE                    # Apache 2.0 开源许可证
+├── README.md                  # 英文说明文档
+├── README_CN.md              # 中文说明文档
+├── CMakeLists.txt            # CMake 构建配置
+├── Dockerfile                # Docker 容器化配置
+├── docker-compose.yml        # Docker Compose 多服务编排
+├── requirements.txt          # Python 依赖包列表
+├── BUILD_NOTES.txt          # C++ 构建注意事项
+│
 ├── src/
-│   ├── cpp/                    # C++ 核心模块
-│   │   ├── ring_buffer.h      # 多源时间戳对齐
-│   │   ├── adaptive_filter.h  # LMS 自适应滤波
-│   │   ├── signal_quality.h   # 信号质量评估
-│   │   └── featureExtractor.h # 特征提取
-│   └── python/                # Python 业务层
-│       ├── signal_processor.py # 处理流水线
-│       ├── feature_pipeline.py # 特征向量转换
-│       ├── downstream_demo.py  # 手势识别示例
-│       └── api_server.py      # WebSocket API
-├── tests/                     # 测试套件
-├── configs/                   # 配置文件
-└── docs/                     # 文档
+│   ├── cpp/                  # C++ 核心模块（Eigen + FFTW）
+│   │   ├── ring_buffer.h     # 环形缓冲区：多源传感器时间戳对齐与插值
+│   │   ├── adaptive_filter.h # LMS 自适应滤波器：IMU 辅助运动伪影去除
+│   │   ├── signal_quality.h # 信号质量评估：方差/ZCR/频谱熵/动态范围
+│   │   ├── featureExtractor.h# 特征提取：时域/频域/非线性特征
+│   │   └── pybind_module.cpp# pybind11 绑定：导出 C++ 类到 Python
+│   │
+│   └── python/               # Python 业务层
+│       ├── signal_processor.py  # 信号处理流水线：整合滤波/SQA/特征提取
+│       ├── feature_pipeline.py  # 特征向量转换：标准化接口供下游 ML 使用
+│       ├── downstream_demo.py   # 下游示例：XGBoost 肌电手势分类器
+│       ├── data_acquisition.py  # 数据采集接口：BrainFlow 集成占位
+│       ├── api_server.py        # FastAPI WebSocket 服务器：实时流式 API
+│       ├── adaptive_filter_mock.py  # LMS 滤波器的纯 Python 实现（测试用）
+│       ├── signal_quality_mock.py   # SQA 的纯 Python 实现（测试用）
+│       └── feature_extractor_mock.py # 特征提取的纯 Python 实现（测试用）
+│
+├── tests/                     # 测试套件（pytest）
+│   ├── test_adaptive_filter.py       # 自适应滤波测试
+│   ├── test_signal_quality.py        # 信号质量评估测试
+│   ├── test_feature_extractor.py      # 特征提取测试
+│   ├── test_pipeline_integration.py   # 端到端流水线集成测试
+│   └── test_gesture_classifier.py     # 手势分类器测试
+│
+├── configs/                  # 配置文件
+│   └── default_config.yaml   # 默认配置（通道数/采样率/滤波器参数）
+│
+├── scripts/                  # 构建脚本
+│   └── build_cpp.sh         # C++ 扩展编译脚本
+│
+└── docs/                    # 技术文档
+    └── architecture.md      # 架构深度解析
 ```
 
 ## 性能基准
