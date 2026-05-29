@@ -3,6 +3,16 @@
 > High-performance streaming engine for multi-modal physiological signal processing
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-green.svg)]()
+[![C++](https://img.shields.io/badge/C++-17-blue.svg)]()
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)]()
+[![Eigen](https://img.shields.io/badge/Eigen-3.4-green.svg)]()
+[![FFTW](https://img.shields.io/badge/FFTW-3.3-orange.svg)]()
+[![pybind11](https://img.shields.io/badge/pybind11-2.11-orange.svg)]()
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.104-green.svg)]()
+[![XGBoost](https://img.shields.io/badge/XGBoost-2.0-red.svg)]()
+[![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)]()
+
+**Tech Stack:** C++17 · Eigen · FFTW · pybind11 · Python 3.10+ · FastAPI · XGBoost · Docker · BrainFlow · scikit-learn
 
 ## Overview
 
