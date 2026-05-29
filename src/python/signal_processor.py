@@ -2,6 +2,8 @@
 import numpy as np
 from typing import Dict
 import sys
+import os
+sys.path.insert(0, os.path.dirname(__file__))
 sys.path.insert(0, '/Users/yinjili/p10_NeuraHeal_v3/physio-stream-engine/build')
 
 # Try to import C++ modules, fall back to mocks
@@ -15,21 +17,21 @@ except ImportError:
 class SignalProcessor:
     """High-level signal processing pipeline orchestrating C++ core modules."""
 
-    def __init__(self, eeg_channels: int, imu_channels: int, sample_rate: float):
-        self.eeg_channels = eeg_channels
-        self.imu_channels = imu_channels
+    def __init__(self, sample_rate: float, n_channels: int):
+        self.eeg_channels = n_channels
+        self.imu_channels = 3
         self.fs = sample_rate
 
         # Initialize C++ processing cores
         self.adaptive_filters = [
             AdaptiveFilter(sample_rate, filter_length=64, mu=0.01)
-            for _ in range(eeg_channels)
+            for _ in range(self.eeg_channels)
         ]
         self.sqa = SignalQuality(sample_rate)
         self.feature_extractor = FeatureExtractor(sample_rate)
 
         self.buffer_len = int(sample_rate * 2)  # 2-second window
-        self.buffer = np.zeros((self.buffer_len, eeg_channels))
+        self.buffer = np.zeros((self.buffer_len, self.eeg_channels))
 
     def process(self, eeg_data: np.ndarray, imu_data: np.ndarray) -> Dict:
         """

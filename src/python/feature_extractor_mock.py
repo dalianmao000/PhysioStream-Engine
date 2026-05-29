@@ -41,7 +41,7 @@ class FeatureExtractor:
         features['peak_freq'] = float(freqs[peak_idx])
 
         psd_norm = psd / (psd.sum() + 1e-10)
-        features['spectral_entropy'] = float(-np.sum(psd_norm * np.log2(psd_norm + 1e-10)) / np.log2(len(psd)))
+        features['spectral_entropy'] = float(-np.sum(psd_norm * np.log2(psd_norm + 1e-10)) / np.log2(len(psd_norm)))
 
         return features
 

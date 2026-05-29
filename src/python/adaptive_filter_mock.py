@@ -46,11 +46,13 @@ class AdaptiveFilter:
                 self.x_buffer[j] = self.x_buffer[j - 1]
             self.x_buffer[0] = reference_noise[i]
 
-            # LMS update
+            # LMS update with weight clamping to prevent overflow
             y = np.dot(self.w, self.x_buffer)
             e = primary_input[i] - y
             for j in range(self.M):
                 self.w[j] += self.mu * e * self.x_buffer[j]
+            # Clamp weights to prevent overflow
+            self.w = np.clip(self.w, -100, 100)
 
             output[i] = e  # Error signal = denoised primary
 
